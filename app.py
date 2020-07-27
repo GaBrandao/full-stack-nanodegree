@@ -97,8 +97,8 @@ class Show(db.Model):
 #----------------------------------------------------------------------------#
 
 
-def format_datetime(date, format='medium'):
-    # date = dateutil.parser.parse(date)
+def format_datetime(value, format='medium'):
+    date = dateutil.parser.parse(value)
     if format == 'full':
         format = "EEEE MMMM, d, y 'at' h:mma"
     elif format == 'medium':
@@ -297,7 +297,7 @@ def show_artist(artist_id):
 #  ----------------------------------------------------------------
 
 
-@ app.route('/artists/<int:artist_id>/edit', methods=['GET'])
+@app.route('/artists/<int:artist_id>/edit', methods=['GET'])
 def edit_artist(artist_id):
     form = ArtistForm()
     artist = {
@@ -317,7 +317,7 @@ def edit_artist(artist_id):
     return render_template('forms/edit_artist.html', form=form, artist=artist)
 
 
-@ app.route('/artists/<int:artist_id>/edit', methods=['POST'])
+@app.route('/artists/<int:artist_id>/edit', methods=['POST'])
 def edit_artist_submission(artist_id):
     # TODO: take values from the form submitted, and update existing
     # artist record with ID <artist_id> using the new attributes
