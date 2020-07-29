@@ -86,7 +86,11 @@ class VenueForm(FlaskForm):
     )
     phone = StringField(
         'phone',
-        validators=[Optional(), Regexp("\d{3}-\d{3}-\d{4}")]
+        validators=[
+            Optional(),
+            Regexp("^(\d{3}-\d{3}-\d{4})$",
+                   message="Phone number must match XXX-XXX-XXXX pattern.")
+        ]
     )
     image_link = StringField(
         'image_link'
@@ -116,7 +120,8 @@ class VenueForm(FlaskForm):
         ]
     )
     facebook_link = StringField(
-        'facebook_link', validators=[Optional(), URL()]
+        'facebook_link',
+        validators=[Optional(), URL(message="Invalid Facebook URL.")]
     )
 
 
@@ -185,7 +190,11 @@ class ArtistForm(FlaskForm):
     )
     phone = StringField(
         'phone',
-        validators=[Optional(), Regexp("\d{3}-\d{3}-\d{4}")]
+        validators=[
+            Optional(),
+            Regexp("^(\d{3}-\d{3}-\d{4})$",
+                   message="Phone number must match XXX-XXX-XXXX pattern.")
+        ]
     )
     image_link = StringField(
         'image_link'
@@ -215,5 +224,6 @@ class ArtistForm(FlaskForm):
         ]
     )
     facebook_link = StringField(
-        'facebook_link', validators=[Optional(), URL()]
+        'facebook_link',
+        validators=[Optional(), URL(message="Invalid Facebook URL.")]
     )
