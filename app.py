@@ -122,26 +122,6 @@ def format_datetime(date, format='medium'):
 app.jinja_env.filters['datetime'] = format_datetime
 
 #----------------------------------------------------------------------------#
-# Auxiliar functions.
-#----------------------------------------------------------------------------#
-
-
-def calc_num_upcoming_show(shows):
-    """Compute number of upcoming shows
-
-    Parameters
-    ----------
-    shows : list 
-        List of show objects
-
-    Returns
-    -------
-    int 
-        Number of shows starting after current time
-    """
-    return len(list(filter(lambda s: s.start_time > datetime.utcnow(), shows)))
-
-#----------------------------------------------------------------------------#
 # Controllers.
 #----------------------------------------------------------------------------#
 
