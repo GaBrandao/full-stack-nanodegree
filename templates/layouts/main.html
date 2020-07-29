@@ -94,7 +94,7 @@
           {% for category, message in messages %}
             <div class="alert alert-block alert-{{category}} fade in">
               <a class="close" data-dismiss="alert">&times;</a>
-              {{ message }}
+              <span style="white-space: pre;">{{ message }}</span>
             </div>
           {% endfor %}
         {% endif %}

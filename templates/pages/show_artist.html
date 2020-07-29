@@ -23,21 +23,22 @@ endblock %} {% block content %}
 <div class="row">
   <div class="col-sm-6">
     <div>
-      <button
-        type="button"
-        class="close"
-        aria-label="Delete"
-        onclick="deleteArtist(event)"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <button type="button" class="close" aria-label="Edit">
-        <a href="/artists/{{artist.id}}/edit">
-          <span aria-hidden="true">&#9998;</span>
-        </a>
-      </button>
       <h1 class="monospace">
         {{ artist.name }}
+        <button
+          type="button"
+          class="btn btn-link pull-right"
+          aria-label="Delete"
+          onclick="deleteArtist(event)"
+        >
+          <i class="fa fa-trash"></i>
+        </button>
+
+        <button type="button" class="btn btn-link pull-right" aria-label="Edit">
+          <a href="/artists/{{artist.id}}/edit">
+            <i class="fa fa-edit"></i>
+          </a>
+        </button>
       </h1>
     </div>
 

@@ -4,7 +4,7 @@ block content %}
   const deleteVenue = (e) => {
     e.preventDefault();
 
-    if (confirm('Delete Venue?')) {
+    if (confirm('Delete venue "{{venue.name}}"?')) {
       fetch('/venues/{{ venue.id }}', {
         method: 'DELETE',
       })
@@ -23,21 +23,22 @@ block content %}
 <div class="row">
   <div class="col-sm-6">
     <div>
-      <button
-        type="button"
-        class="close mt-2"
-        aria-label="Delete"
-        onclick="deleteVenue(event)"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <button type="button" class="close" aria-label="Edit">
-        <a href="/venues/{{venue.id}}/edit">
-          <span aria-hidden="true">&#9998;</span>
-        </a>
-      </button>
       <h1 class="monospace">
         {{ venue.name }}
+        <button
+          type="button"
+          class="btn btn-link pull-right"
+          aria-label="Delete"
+          onclick="deleteVenue(event)"
+        >
+          <i class="fa fa-trash"></i>
+        </button>
+
+        <button type="button" class="btn btn-link pull-right" aria-label="Edit">
+          <a href="/venues/{{venue.id}}/edit">
+            <i class="fa fa-edit"></i>
+          </a>
+        </button>
       </h1>
     </div>
     <p class="subtitle">
