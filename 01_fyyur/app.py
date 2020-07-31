@@ -14,7 +14,6 @@ from logging import Formatter, FileHandler
 from flask_wtf import FlaskForm, CSRFProtect
 from forms import *
 from datetime import datetime
-import time
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -288,7 +287,7 @@ def delete_venue(venue_id):
         db.session.commit()
         flash(f'Venue {venue.name} was successfully deleted!', 'success')
     except:
-        db.rollback()
+        db.session.rollback()
         flash('An error occurred on deletion. Venue '
               + venue.name + ' could not be deleted.', 'danger')
         return jsonify({'success': False})
@@ -520,7 +519,7 @@ def delete_artist(artist_id):
         db.session.commit()
         flash(f'Venue {artist.name} was successfully deleted!', 'success')
     except:
-        db.rollback()
+        db.session.rollback()
         flash('An error occurred on deletion. Venue '
               + artist.name + ' could not be deleted.', 'danger')
         return jsonify({'success': True})
