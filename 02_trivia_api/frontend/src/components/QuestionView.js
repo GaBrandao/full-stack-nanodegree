@@ -65,7 +65,7 @@ class QuestionView extends Component {
       success: (result) => {
         this.setState({
           questions: result.questions,
-          totalQuestions: result.total_questions,
+          totalQuestions: 1,
           currentCategory: result.current_category })
         return;
       },
@@ -90,8 +90,7 @@ class QuestionView extends Component {
       success: (result) => {
         this.setState({
           questions: result.questions,
-          totalQuestions: result.total_questions,
-          currentCategory: result.current_category })
+          totalQuestions: 1 })
         return;
       },
       error: (error) => {
@@ -132,7 +131,7 @@ class QuestionView extends Component {
               </li>
             ))}
           </ul>
-          <Search submitSearch={this.submitSearch}/>
+          <Search submitSearch={this.submitSearch} getQuestions={this.getQuestions}/>
         </div>
         <div className="questions-list">
           <h2>Questions</h2>
