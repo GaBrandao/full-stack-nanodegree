@@ -44,7 +44,7 @@ Now you are ready to go. If frontend server is not running yet, go to `frontend`
 
 ### Testing
 
-To run the tests:
+Be sure you setup the TEST_DATABASE_NAME in `test_flaskr.py` correctly. To run the tests:
 ```bash
 dropdb TEST_DATABASE_NAME && createdb TEST_DATABASE_NAME
 psql TEST_DATABASE_NAME < trivia.psql
@@ -78,6 +78,23 @@ Status codes and messages summary:
 
 ### Endpoints
 
+Summary:
+
+* Questions
+	* [GET /questions](#get/questions)
+	* [POST /questions](#post/questions)
+	* [DELETE /questions](#delet/questions)
+
+* Categories
+	* [GET /categories](#get/categories)
+	* [GET /categories/<id>/questions](#get/categories/questions)
+
+* Quizzes
+	* [POST /quizzes](#post/quizzes)
+
+
+<a name="get/questions"/>
+
 #### GET /questions
 
 Get paginated questions.
@@ -88,7 +105,7 @@ GET http://127.0.0.1:5000/questions?page=<page>
 
 * Returns json object containing a list of questions, number of total questions, current category, categories available and success value.
 
-* Questions are paginated in groups of 10. Argument **page** is optional, default value is 1.
+* Questions are paginated in groups of 10. Argument **page** is optional, default value is set to 1.
 
 Sample request:
 
@@ -127,6 +144,7 @@ Sample request:
 }
 
 ```
+<a name="post/questions"/>
 
 #### POST /questions
 
@@ -178,8 +196,9 @@ Sample request:
   "success": true
 }
 ```
+<a name="delete/questions"/>
 
-### DELETE /questions/<id>
+#### DELETE /questions/<id>
 
 Deletes the question of given id.
 
@@ -199,6 +218,8 @@ Sample request:
 	"success": true
 }
 ```
+
+<a name="get/categories"/>
 
 #### GET /categories
 
@@ -227,6 +248,8 @@ Sample request:
   "success": true
 }
 ```
+
+<a name="get/categories/questions"/>
 
 #### GET /categories/<id>/questions
 
@@ -271,6 +294,7 @@ Sample request:
   "success": true
 }
 ```
+<a name="post/quizzes"/>
 
 #### POST /quizzes
 
@@ -280,7 +304,9 @@ Get questions to play the quiz.
 POST http://127.0.0.1:5000/quizzes
 ```
 
-* Recieve category and previous question parameters and return a random questions within the given category, if provided, and that is not one of the previous questions.
+* Recieve arguments category and previous questions, a list of question ids.
+
+* Returns a random questions within the given category, if provided, and that is not one of the previous questions.
 
 Sample request:
 
