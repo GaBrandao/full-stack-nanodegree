@@ -76,3 +76,225 @@ Status codes and messages summary:
 | `422` | unprocessable |
 | `500` | internal server error |
 
+### Endpoints
+
+#### GET /questions
+
+Get paginated questions.
+
+```html
+GET http://127.0.0.1:5000/questions?page=<page>
+```
+
+* Returns json object containing a list of questions, number of total questions, current category, categories available and success value.
+
+* Questions are paginated in groups of 10. Argument **page** is optional, default value is 1.
+
+Sample request:
+
+`curl http://127.0.0.1:5000/questions?page=1`:
+
+```js
+{
+  "categories": {
+    "1": "science", 
+    "2": "art", 
+    "3": "geography", 
+    "4": "history", 
+    "5": "entertainment", 
+    "6": "sports"
+  }, 
+  "current_category": null, 
+  "questions": [
+    {
+      "answer": "Apollo 13", 
+      "category": 5, 
+      "difficulty": 4, 
+      "id": 2, 
+      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+    }, 
+    {
+      "answer": "Tom Cruise", 
+      "category": 5, 
+      "difficulty": 4, 
+      "id": 4, 
+      "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
+    },
+	...
+  ], 
+  "success": true, 
+  "total_questions": 19
+}
+
+```
+
+#### POST /questions
+
+Creates a new question with the given question, answer, difficulty and category.
+
+```html
+POST http://127.0.0.1:5000/questions
+```
+
+* Returns json object containing the id of created question and success value.
+
+Sample request:
+
+`curl -X POST http://127.0.0.1:5000/questions -H "Content-Type: application/json" -d '{"question":"Who invented the airplane?", "answer":"Santos Dumont", "difficulty":3, "category":"4"}'`
+
+```js
+{
+	"created": 24,
+	"success": true
+}
+```
+
+If argument `searchTerm` is provided returns questions for whom the search term is a substring of the question instead.
+
+* Returns json object containing a list of all matching questions and success value.
+
+Sample request:
+
+`curl -X POST http://127.0.0.1:5000/questions -H "Content-Type: application/json" -d '{"searchTerm":"soccer"}'`
+
+```js
+{
+  "questions": [
+    {
+      "answer": "Brazil", 
+      "category": 6, 
+      "difficulty": 3, 
+      "id": 10, 
+      "question": "Which is the only team to play in every soccer World Cup tournament?"
+    }, 
+    {
+      "answer": "Uruguay", 
+      "category": 6, 
+      "difficulty": 4, 
+      "id": 11, 
+      "question": "Which country won the first ever soccer World Cup in 1930?"
+    }
+  ], 
+  "success": true
+}
+```
+
+### DELETE /questions/<id>
+
+Deletes the question of given id.
+
+```html
+DELETE http://127.0.0.1:5000/questions/<id>
+```
+
+* Deletes the question if exists. Returning json object containing the id of deleted question and success value.
+
+Sample request:
+
+`curl -X DELETE http://127.0.0.1:5000/questions/23`
+
+```js
+{
+	"deleted": 23,
+	"success": true
+}
+```
+
+#### GET /categories
+
+Get all categories available.
+
+```html
+GET http://127.0.0.1:5000/categories
+```
+
+* Returns a json object containing categories available (object with `{id, type}` key-value pairs) and success value.
+
+Sample request:
+
+`curl http://127.0.0.1:5000/categories`
+
+```js
+{
+  "categories": {
+    "1": "Science", 
+    "2": "Art", 
+    "3": "Geography", 
+    "4": "History", 
+    "5": "Entertainment", 
+    "6": "Sports"
+  }, 
+  "success": true
+}
+```
+
+#### GET /categories/<id>/questions
+
+Get all questions from given category.
+
+```html
+GET http://127.0.0.1:5000/categories/<id>/questions
+```
+
+* Returns a json object containing a list of questions, current category and success value.
+
+Sample request:
+
+`curl http://127.0.0.1:5000/categories/1/questions`
+
+```js
+{
+  "current_category": 1, 
+  "questions": [
+    {
+      "answer": "The Liver", 
+      "category": 1, 
+      "difficulty": 4, 
+      "id": 20, 
+      "question": "What is the heaviest organ in the human body?"
+    }, 
+    {
+      "answer": "Alexander Fleming", 
+      "category": 1, 
+      "difficulty": 3, 
+      "id": 21, 
+      "question": "Who discovered penicillin?"
+    }, 
+    {
+      "answer": "Blood", 
+      "category": 1, 
+      "difficulty": 4, 
+      "id": 22, 
+      "question": "Hematology is a branch of medicine involving the study of what?"
+    }
+  ], 
+  "success": true
+}
+```
+
+#### POST /quizzes
+
+Get questions to play the quiz.
+
+```html
+POST http://127.0.0.1:5000/quizzes
+```
+
+* Recieve category and previous question parameters and return a random questions within the given category, if provided, and that is not one of the previous questions.
+
+Sample request:
+
+`curl -X POST http://127.0.0.1:5000/quizzes -H "Content-Type: application/json" -d '{"quiz_category":{"id":"4", "type":"History"}}'`
+
+```js
+{
+  "question": {
+    "answer": "Muhammad Ali", 
+    "category": 4, 
+    "difficulty": 1, 
+    "id": 9, 
+    "question": "What boxer's original name is Cassius Clay?"
+  }, 
+  "success": true
+}
+```
