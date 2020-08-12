@@ -4,8 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 
 database_name = "trivia"
-database_path = "postgresql://{}/{}".format(
-    'gbrandao@localhost:5432', database_name)
+database_host = "gbrandao@localhost:5432"
+database_uri = f'postgresql://{database_host}/{database_name}'
 
 db = SQLAlchemy()
 
@@ -15,8 +15,8 @@ setup_db(app)
 '''
 
 
-def setup_db(app, database_path=database_path):
-    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+def setup_db(app, database_uri=database_uri):
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_uri
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
