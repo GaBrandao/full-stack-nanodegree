@@ -81,19 +81,16 @@ Status codes and messages summary:
 Summary:
 
 * Questions
-	* [GET /questions](#get/questions)
-	* [POST /questions](#post/questions)
-	* [DELETE /questions](#delet/questions)
+	- [GET /questions](#get--questions)
+	- [POST /questions](#post--questions)
+	- [DELETE /questions/<id>](#delete--questions--id-)
 
 * Categories
-	* [GET /categories](#get/categories)
-	* [GET /categories/<id>/questions](#get/categories/questions)
+	- [GET /categories](#get--categories)
+	- [GET /categories/<id>/questions](#get--categories--id--questions)
 
 * Quizzes
-	* [POST /quizzes](#post/quizzes)
-
-
-<a name="get/questions"/>
+	- [POST /quizzes](#post--quizzes)
 
 #### GET /questions
 
@@ -144,7 +141,6 @@ Sample request:
 }
 
 ```
-<a name="post/questions"/>
 
 #### POST /questions
 
@@ -196,7 +192,6 @@ Sample request:
   "success": true
 }
 ```
-<a name="delete/questions"/>
 
 #### DELETE /questions/<id>
 
@@ -218,8 +213,6 @@ Sample request:
 	"success": true
 }
 ```
-
-<a name="get/categories"/>
 
 #### GET /categories
 
@@ -248,8 +241,6 @@ Sample request:
   "success": true
 }
 ```
-
-<a name="get/categories/questions"/>
 
 #### GET /categories/<id>/questions
 
@@ -294,7 +285,6 @@ Sample request:
   "success": true
 }
 ```
-<a name="post/quizzes"/>
 
 #### POST /quizzes
 
