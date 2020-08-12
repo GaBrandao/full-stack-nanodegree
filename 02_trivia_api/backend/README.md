@@ -2,7 +2,7 @@
 
 First, install [Python](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python), [pip](https://pip.pypa.io/en/stable/installing/) and [postgresql](https://www.postgresql.org/download/) if you haven't already.
 
-Make sure you are in ``` backend``` directory, if not:
+Make sure you are in ` backend` directory, if not:
 ```
 $ cd PROJECT_DIRECTORY_PATH/backend
 ```
@@ -20,7 +20,7 @@ $ . venv/bin/activate
 $ pip install -r requirements.txt
 ```
 
-3. Setup database config in  ```models.py``` and ```test_flaskr.py```.
+3. Setup database config in  `models.py` and `test_flaskr.py`.
 ```python
 	...
 	database_name = "<DATABASE_NAME>"
@@ -40,7 +40,7 @@ $ export FLASK_APP=flaskr FLASK_ENV=development
 $ flask run
 ```
 
-Now you are ready to go. If frontend server is not running yet, go to ```frontend``` directory and follow the instructions.
+Now you are ready to go. If frontend server is not running yet, go to `frontend` directory and follow the instructions.
 
 ### Testing
 
@@ -55,7 +55,7 @@ python3 test_flaskr.py
 
 #### Base URL
 
-Since this project only runs locally, it is not hosted as a base URL. The backend app is hosted at the default, ```http://127.0.0.1:5000/```, which is set as a proxy in the frontend configuration.
+Since this project only runs locally, it is not hosted as a base URL. The backend app is hosted at the default, `http://127.0.0.1:5000/`, which is set as a proxy in the frontend configuration.
 
 #### Error handling
 
@@ -63,9 +63,16 @@ Error responses are returned as JSON objects as follows:
 
 ```js
 {	
-	"success": False,
+	"success": false,
 	"error": 404,
 	"message": "resource not found"
 }
 ```
+Status codes and messages summary:
+| code | message |
+| ------- | ------------- |
+| `400`  | bad request  |
+| `404` | resource not found  |
+| `422` | unprocessable |
+| `500` | internal server error |
 
