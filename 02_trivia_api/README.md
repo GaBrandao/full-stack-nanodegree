@@ -9,7 +9,11 @@ This project is a trivia app developed to:
 4. **Search **for questions.
 5. Play the **quiz game**, randomizing either all questions or within a specific category. 
 
-It makes part of  the Full-Stack Web Developer nanodegree API development practice projects.
+It makes part of the Full-Stack Web Developer nanodegree API development practice projects. 
+
+This lesson objective is to  
+learn structuring and implementing well formatted API, as well as to apply Test-Driven Development (TDD) in the process of development.
+
 All backend code follows [PEP8 style guidelines](https://www.python.org/dev/peps/pep-0008/). 
 
 ## Getting Started
@@ -20,4 +24,4 @@ This project requires [Python3](https://www.python.org/downloads/), [pip](https:
 
 ### Local Development 
 
-To run the application locally, you need to start both **backend** and **frontend**. Corresponding instructions can be found in ther directories.
+To run the application locally, you need to setup both **backend** and **frontend**. Instructions can be found in their corresponding directories.

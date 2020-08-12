@@ -73,6 +73,7 @@ Status codes and messages summary:
 | ------- | ------------- |
 | `400`  | bad request  |
 | `404` | resource not found  |
+| `405` | method not allowed  |
 | `422` | unprocessable |
 | `500` | internal server error |
 
@@ -81,19 +82,19 @@ Status codes and messages summary:
 Summary:
 
 * Questions
-	* [GET /questions](#get/questions)
-	* [POST /questions](#post/questions)
-	* [DELETE /questions/<id>](#delet/questions)
+	* [GET /questions](#get-questions)
+	* [POST /questions](#post-questions)
+	* [DELETE /questions/{id}](#delete-questions)
 
 * Categories
-	* [GET /categories](#get/categories)
-	* [GET /categories/<id>/questions](#get/categories/questions)
+	* [GET /categories](#get-categories)
+	* [GET /categories/{id}/questions](#get-categories-questions)
 
 * Quizzes
-	* [POST /quizzes](#post/quizzes)
+	* [POST /quizzes](#post-quizzes)
 
 
-<a name="get/questions"/>
+<a name="get-questions"/>
 
 #### GET /questions
 
@@ -107,7 +108,7 @@ GET http://127.0.0.1:5000/questions?page=<page>
 
 * Questions are paginated in groups of 10. Argument **page** is optional, default value is set to 1.
 
-Sample request:
+Sample response:
 
 `curl http://127.0.0.1:5000/questions?page=1`:
 
@@ -144,7 +145,7 @@ Sample request:
 }
 
 ```
-<a name="post/questions"/>
+<a name="post-questions"/>
 
 #### POST /questions
 
@@ -156,7 +157,7 @@ POST http://127.0.0.1:5000/questions
 
 * Returns json object containing the id of created question and success value.
 
-Sample request:
+Sample response:
 
 `curl -X POST http://127.0.0.1:5000/questions -H "Content-Type: application/json" -d '{"question":"Who invented the airplane?", "answer":"Santos Dumont", "difficulty":3, "category":"4"}'`
 
@@ -171,7 +172,7 @@ If argument `searchTerm` is provided returns questions for whom the search term 
 
 * Returns json object containing a list of all matching questions and success value.
 
-Sample request:
+Sample response:
 
 `curl -X POST http://127.0.0.1:5000/questions -H "Content-Type: application/json" -d '{"searchTerm":"soccer"}'`
 
@@ -196,9 +197,9 @@ Sample request:
   "success": true
 }
 ```
-<a name="delete/questions"/>
+<a name="delete-questions"/>
 
-#### DELETE /questions/<id>
+#### DELETE /questions/{id}
 
 Deletes the question of given id.
 
@@ -208,7 +209,7 @@ DELETE http://127.0.0.1:5000/questions/<id>
 
 * Deletes the question if exists. Returning json object containing the id of deleted question and success value.
 
-Sample request:
+Sample response:
 
 `curl -X DELETE http://127.0.0.1:5000/questions/23`
 
@@ -219,7 +220,7 @@ Sample request:
 }
 ```
 
-<a name="get/categories"/>
+<a name="get-categories"/>
 
 #### GET /categories
 
@@ -231,7 +232,7 @@ GET http://127.0.0.1:5000/categories
 
 * Returns a json object containing categories available (object with `{id, type}` key-value pairs) and success value.
 
-Sample request:
+Sample response:
 
 `curl http://127.0.0.1:5000/categories`
 
@@ -249,9 +250,9 @@ Sample request:
 }
 ```
 
-<a name="get/categories/questions"/>
+<a name="get-categories-questions"/>
 
-#### GET /categories/<id>/questions
+#### GET /categories/{id}/questions
 
 Get all questions from given category.
 
@@ -261,7 +262,7 @@ GET http://127.0.0.1:5000/categories/<id>/questions
 
 * Returns a json object containing a list of questions, current category and success value.
 
-Sample request:
+Sample response:
 
 `curl http://127.0.0.1:5000/categories/1/questions`
 
@@ -294,7 +295,7 @@ Sample request:
   "success": true
 }
 ```
-<a name="post/quizzes"/>
+<a name="post-quizzes"/>
 
 #### POST /quizzes
 
@@ -308,7 +309,7 @@ POST http://127.0.0.1:5000/quizzes
 
 * Returns a random questions within the given category, if provided, and that is not one of the previous questions.
 
-Sample request:
+Sample response:
 
 `curl -X POST http://127.0.0.1:5000/quizzes -H "Content-Type: application/json" -d '{"quiz_category":{"id":"4", "type":"History"}}'`
 
