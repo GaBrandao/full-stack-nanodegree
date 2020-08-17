@@ -6,7 +6,7 @@ This project is a trivia app developed to:
 1. **Display** questions. 
 2. **Add** questions.
 3. **Delete** questions.
-4. **Search **for questions.
+4. **Search** for questions.
 5. Play the **quiz game**, randomizing either all questions or within a specific category. 
 
 It makes part of the Full-Stack Web Developer nanodegree API development practice projects. 
