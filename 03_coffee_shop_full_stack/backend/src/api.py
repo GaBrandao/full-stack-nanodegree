@@ -12,7 +12,7 @@ setup_db(app)
 CORS(app)
 
 '''
-@TODO uncomment the following line to initialize the datbase
+@DONE uncomment the following line to initialize the datbase
 !! NOTE THIS WILL DROP ALL RECORDS AND START YOUR DB FROM SCRATCH
 !! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
 '''
@@ -20,7 +20,7 @@ CORS(app)
 
 # ROUTES
 '''
-@TODO implement endpoint
+@DONE implement endpoint
     GET /drinks
         it should be a public endpoint
         it should contain only the drink.short() data representation
@@ -29,14 +29,41 @@ CORS(app)
 '''
 
 
+@app.route('/drinks')
+def get_drinks():
+    drinks = Drink.query.order_by(Drink.title).all()
+
+    if len(drinks) == 0:
+        abort(404)
+
+    return jsonify({
+        'success': True,
+        'drinks': [drink.short() for drink in drinks]
+    })
+
+
 '''
-@TODO implement endpoint
+@DONE implement endpoint
     GET /drinks-detail
         it should require the 'get:drinks-detail' permission
         it should contain the drink.long() data representation
     returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
         or appropriate status code indicating reason for failure
 '''
+
+
+@app.route('/drinks-detail')
+@requires_auth('get:drinks-detail')
+def get_drinks_detail(payload):
+    drinks = Drink.query.order_by(Drink.title).all()
+
+    if len(drinks) == 0:
+        abort(404)
+
+    return jsonify({
+        'success': True,
+        'drinks': [drink.long() for drink in drinks]
+    })
 
 
 '''
@@ -48,6 +75,34 @@ CORS(app)
     returns status code 200 and json {"success": True, "drinks": drink} where drink an array containing only the newly created drink
         or appropriate status code indicating reason for failure
 '''
+
+
+@app.route('/drinks', methods=['POST'])
+@requires_auth('post:drinks')
+def post_drinks(payload):
+    data = request.get_json()
+
+    if not data:
+        abort(400)
+
+    title = data.get('title', None)
+    recipe = data.get('recipe', None)
+
+    try:
+        new_drink = Drink(
+            title=title,
+            recipe=json.dumps(recipe, separators=(',', ':'))
+        )
+        new_drink.insert()
+
+    except:
+        Drink.rollback()
+        abort(422)
+
+    return jsonify({
+        'success': True,
+        'drink': new_drink.long()
+    })
 
 
 '''
