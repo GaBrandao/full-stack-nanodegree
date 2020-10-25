@@ -13,8 +13,8 @@ def create_app(test_config=None):
     CORS(app)
 
     # API Endpoints
+    # @requires_auth('get:movies')
     @app.route('/movies', methods=['GET'])
-    @requires_auth('get:movies')
     def get_movies():
         movies = Movie.query.all()
 
