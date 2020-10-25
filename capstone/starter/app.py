@@ -16,6 +16,14 @@ def create_app(test_config=None):
     # @requires_auth('get:movies')
     @app.route('/movies', methods=['GET'])
     def get_movies():
+        """
+            GET /movies
+
+            returns status code 200 and json 
+                {"success": True, "movies": movies} 
+                where movies is the list of movies
+                OR appropriate status code indicating reason for failure
+        """
         movies = Movie.query.all()
 
         if len(movies) == 0:
@@ -23,12 +31,19 @@ def create_app(test_config=None):
 
         return jsonify({
             'success': True,
-            'drinks': [movie.format() for movie in movies]
+            'movies': [movie.format() for movie in movies]
         })
 
+    # @requires_auth('post:movies')
     @app.route('/movies', methods=['POST'])
-    @requires_auth('post:movies')
-    def post_movies(payload):
+    def post_movies():
+        """
+            POST /movies
+
+            returns status code 200 and json {"success": True, "created": id}
+                    where id is the id of the created movie
+                    OR appropriate status code indicating reason for failure
+        """
         data = request.get_json()
 
         if not data:
@@ -56,9 +71,16 @@ def create_app(test_config=None):
             'created': new_movie.id
         })
 
+    # @requires_auth('patch:movies')
     @app.route('/movies/<int:id>', methods=['PATCH'])
-    @requires_auth('patch:movies')
-    def patch_movies(payload, id):
+    def patch_movies(id):
+        """
+            PATCH /movies
+
+            returns status code 200 and json {"success": True, "movie": movie}
+                where movie is the movie modified attributes
+                OR appropriate status code indicating reason for failure
+        """
         movie = Movie.query.get_or_404(id)
 
         data = request.get_json()
@@ -70,8 +92,10 @@ def create_app(test_config=None):
         release_date = data.get('release_date', None)
 
         try:
-            movie.title = title
-            movie.release_date = release_date
+            if title:
+                movie.title = title
+            if release_date:
+                movie.release_date = release_date
             movie.update()
 
         except:
@@ -83,9 +107,17 @@ def create_app(test_config=None):
             'movie': [movie.format()]
         })
 
+    # @requires_auth('delete:movies')
     @app.route('/movies/<int:id>', methods=['DELETE'])
-    @requires_auth('delete:movies')
-    def delete_movie(payload, id):
+    def delete_movie(id):
+        """
+            DELETE /movies
+
+            returns status code 200 and json {"success": True, "deleted": id}
+                where id is the id of deleted movie
+                OR appropriate status code indicating reason for failure
+        """
+
         movie = Movie.query.get_or_404(id)
 
         try:
@@ -100,10 +132,18 @@ def create_app(test_config=None):
             'deleted': movie.id
         })
 
+    # @requires_auth('get:actors')
     @app.route('/actors', methods=['GET'])
-    @requires_auth('get:actors')
     def get_actors():
-        actors = Movie.query.all()
+        """
+            GET /actors
+
+            returns status code 200 and json 
+                {"success": True, "actors": actors} 
+                where actors is the list of actors
+                OR appropriate status code indicating reason for failure
+        """
+        actors = Actor.query.all()
 
         if len(actors) == 0:
             abort(404)
@@ -113,9 +153,16 @@ def create_app(test_config=None):
             'actors': [actor.format() for actor in actors]
         })
 
+    # @requires_auth('post:actors')
     @app.route('/actors', methods=['POST'])
-    @requires_auth('post:actors')
-    def post_actors(payload):
+    def post_actors():
+        """
+            POST /actors
+
+            returns status code 200 and json {"success": True, "created": id}
+                    where id is the id of the created actor
+                    OR appropriate status code indicating reason for failure
+        """
         data = request.get_json()
 
         if not data:
@@ -132,7 +179,7 @@ def create_app(test_config=None):
             new_actor = Actor(
                 name=name,
                 age=age,
-                gender=age
+                gender=gender
             )
             new_actor.insert()
 
@@ -145,9 +192,16 @@ def create_app(test_config=None):
             'created': new_actor.id
         })
 
+    # @requires_auth('patch:actors')
     @app.route('/actors/<int:id>', methods=['PATCH'])
-    @requires_auth('patch:actors')
-    def patch_actors(payload, id):
+    def patch_actors(id):
+        """
+            PATCH /actors
+
+            returns status code 200 and json {"success": True, "actor": actor}
+                where actor is the actor modified attributes
+                OR appropriate status code indicating reason for failure
+        """
         actor = Actor.query.get_or_404(id)
 
         data = request.get_json()
@@ -160,9 +214,12 @@ def create_app(test_config=None):
         gender = data.get('gender', None)
 
         try:
-            actor.name = name
-            actor.age = age
-            actor.gender = gender
+            if name:
+                actor.name = name
+            if age:
+                actor.age = age
+            if gender:
+                actor.gender = gender
             actor.update()
 
         except:
@@ -174,9 +231,16 @@ def create_app(test_config=None):
             'actor': [actor.format()]
         })
 
+    # @requires_auth('delete:actors')
     @app.route('/actors/<int:id>', methods=['DELETE'])
-    @requires_auth('delete:actors')
-    def delete_actor(payload, id):
+    def delete_actor(id):
+        """
+            DELETE /actors
+
+            returns status code 200 and json {"success": True, "deleted": id}
+                where id is the id of deleted actor
+                OR appropriate status code indicating reason for failure
+        """
         actor = Actor.query.get_or_404(id)
 
         try:
