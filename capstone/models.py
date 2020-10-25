@@ -2,13 +2,14 @@ import os
 from sqlalchemy import Column, String, Integer, Date
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date
+from config import database_config as db_conf
 import json
 
-database_name = "casting"
-database_host = "gbrandao@localhost:5432"
-database_uri = f'postgresql://{database_host}/{database_name}'
 
-database_path = os.environ.get('DATABASE_URL', None)
+database_host = f'{db_conf["user"]}:{db_conf["password"]}@{db_conf["port"]}'
+database_uri = f'postgresql://{database_host}/{db_conf["name"]}'
+
+database_path = os.environ.get("DATABASE_URL", database_uri)
 
 db = SQLAlchemy()
 
@@ -18,11 +19,9 @@ setup_db(app)
 '''
 
 
-def setup_db(app):
-    app.config["SQLALCHEMY_DATABASE_URI"] = (
-        database_path if database_path else database_uri
-    )
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+def setup_db(app, database_path=database_path):
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_path
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
     # db_drop_and_create_all()
@@ -54,6 +53,11 @@ db_drop_and_create_all()
 def db_drop_and_create_all():
     db.drop_all()
     db.create_all()
+
+
+'''
+    Movie model (extends the base SQLAlchemy Model)
+'''
 
 
 class Movie(db.Model):
@@ -88,6 +92,11 @@ class Movie(db.Model):
             'title': self.title,
             'release_date': self.release_date
         }
+
+
+'''
+    Actor model (extends the base SQLAlchemy Model)
+'''
 
 
 class Actor(db.Model):

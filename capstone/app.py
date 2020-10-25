@@ -13,9 +13,9 @@ def create_app(test_config=None):
     CORS(app)
 
     # API Endpoints
-    # @requires_auth('get:movies')
     @app.route('/movies', methods=['GET'])
-    def get_movies():
+    @requires_auth('get:movies')
+    def get_movies(payload):
         """
             GET /movies
 
@@ -24,7 +24,7 @@ def create_app(test_config=None):
                 where movies is the list of movies
                 OR appropriate status code indicating reason for failure
         """
-        movies = Movie.query.all()
+        movies = Movie.query.order_by(Movie.id).all()
 
         if len(movies) == 0:
             abort(404)
@@ -34,9 +34,9 @@ def create_app(test_config=None):
             'movies': [movie.format() for movie in movies]
         })
 
-    # @requires_auth('post:movies')
     @app.route('/movies', methods=['POST'])
-    def post_movies():
+    @requires_auth('post:movies')
+    def post_movies(payload):
         """
             POST /movies
 
@@ -71,9 +71,9 @@ def create_app(test_config=None):
             'created': new_movie.id
         })
 
-    # @requires_auth('patch:movies')
     @app.route('/movies/<int:id>', methods=['PATCH'])
-    def patch_movies(id):
+    @requires_auth('patch:movies')
+    def patch_movies(payload, id):
         """
             PATCH /movies
 
@@ -107,9 +107,9 @@ def create_app(test_config=None):
             'movie': [movie.format()]
         })
 
-    # @requires_auth('delete:movies')
     @app.route('/movies/<int:id>', methods=['DELETE'])
-    def delete_movie(id):
+    @requires_auth('delete:movies')
+    def delete_movie(payload, id):
         """
             DELETE /movies
 
@@ -132,9 +132,9 @@ def create_app(test_config=None):
             'deleted': movie.id
         })
 
-    # @requires_auth('get:actors')
     @app.route('/actors', methods=['GET'])
-    def get_actors():
+    @requires_auth('get:actors')
+    def get_actors(payload):
         """
             GET /actors
 
@@ -143,7 +143,7 @@ def create_app(test_config=None):
                 where actors is the list of actors
                 OR appropriate status code indicating reason for failure
         """
-        actors = Actor.query.all()
+        actors = Actor.query.order_by(Actor.id).all()
 
         if len(actors) == 0:
             abort(404)
@@ -153,9 +153,9 @@ def create_app(test_config=None):
             'actors': [actor.format() for actor in actors]
         })
 
-    # @requires_auth('post:actors')
     @app.route('/actors', methods=['POST'])
-    def post_actors():
+    @requires_auth('post:actors')
+    def post_actors(payload):
         """
             POST /actors
 
@@ -192,9 +192,9 @@ def create_app(test_config=None):
             'created': new_actor.id
         })
 
-    # @requires_auth('patch:actors')
     @app.route('/actors/<int:id>', methods=['PATCH'])
-    def patch_actors(id):
+    @requires_auth('patch:actors')
+    def patch_actors(payload, id):
         """
             PATCH /actors
 
@@ -231,9 +231,9 @@ def create_app(test_config=None):
             'actor': [actor.format()]
         })
 
-    # @requires_auth('delete:actors')
     @app.route('/actors/<int:id>', methods=['DELETE'])
-    def delete_actor(id):
+    @requires_auth('delete:actors')
+    def delete_actor(payload, id):
         """
             DELETE /actors
 
