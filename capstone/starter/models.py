@@ -1,7 +1,6 @@
 import os
 from sqlalchemy import Column, String, Integer, Date
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from datetime import date
 import json
 
@@ -10,7 +9,6 @@ database_host = "gbrandao@localhost:5432"
 database_uri = f'postgresql://{database_host}/{database_name}'
 
 db = SQLAlchemy()
-migrate = Migrate()
 
 '''
 setup_db(app)
@@ -23,9 +21,8 @@ def setup_db(app):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
-    migrate.init_app(app, db)
-    db_drop_and_create_all()
-    populate_db()
+    # db_drop_and_create_all()
+    # populate_db()
 
 
 def populate_db():
