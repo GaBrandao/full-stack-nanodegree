@@ -8,6 +8,8 @@ database_name = "casting"
 database_host = "gbrandao@localhost:5432"
 database_uri = f'postgresql://{database_host}/{database_name}'
 
+database_path = os.environ.get('DATABASE_URL', None)
+
 db = SQLAlchemy()
 
 '''
@@ -17,7 +19,9 @@ setup_db(app)
 
 
 def setup_db(app):
-    app.config["SQLALCHEMY_DATABASE_URI"] = database_uri
+    app.config["SQLALCHEMY_DATABASE_URI"] = (
+        database_path if database_path else database_uri
+    )
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
