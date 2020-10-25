@@ -95,7 +95,7 @@ The project is hosted on `http://casting-agency-fsnd-2020.herokuapp.com`.
 
 When running localy it is hosted at `http://127.0.0.1:8080/`.
 
-#### RBAC
+#### RBAC : Roles and Permissions
 
 The API endpoints have permission requirements that are distributed by the auth0 application into the following roles:
 
@@ -141,6 +141,8 @@ Summary:
 	* [POST /actors](#post-actors)
     * [PATCH /actors/{id}](#patch-actors)
 	* [DELETE /actors/{id}](#delete-actors)
+
+Notice that it is required to pass an Authorization header containing a valid Bearer Token. You can find jwts for all roles in the file `config.py` and make it a bearer token by adding "Bearer " as prefix to those strings.
 
 <a name="get-movies"/>
 
