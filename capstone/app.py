@@ -16,14 +16,14 @@ def create_app(test_config=None):
     @app.route('/movies', methods=['GET'])
     @requires_auth('get:movies')
     def get_movies(payload):
-        """
+        '''
             GET /movies
 
             returns status code 200 and json 
                 {"success": True, "movies": movies} 
                 where movies is the list of movies
                 OR appropriate status code indicating reason for failure
-        """
+        '''
         movies = Movie.query.order_by(Movie.id).all()
 
         if len(movies) == 0:
@@ -37,13 +37,13 @@ def create_app(test_config=None):
     @app.route('/movies', methods=['POST'])
     @requires_auth('post:movies')
     def post_movies(payload):
-        """
+        '''
             POST /movies
 
             returns status code 200 and json {"success": True, "created": id}
                     where id is the id of the created movie
                     OR appropriate status code indicating reason for failure
-        """
+        '''
         data = request.get_json()
 
         if not data:
@@ -74,13 +74,13 @@ def create_app(test_config=None):
     @app.route('/movies/<int:id>', methods=['PATCH'])
     @requires_auth('patch:movies')
     def patch_movies(payload, id):
-        """
+        '''
             PATCH /movies
 
             returns status code 200 and json {"success": True, "movie": movie}
                 where movie is the movie modified attributes
                 OR appropriate status code indicating reason for failure
-        """
+        '''
         movie = Movie.query.get_or_404(id)
 
         data = request.get_json()
@@ -110,13 +110,13 @@ def create_app(test_config=None):
     @app.route('/movies/<int:id>', methods=['DELETE'])
     @requires_auth('delete:movies')
     def delete_movie(payload, id):
-        """
+        '''
             DELETE /movies
 
             returns status code 200 and json {"success": True, "deleted": id}
                 where id is the id of deleted movie
                 OR appropriate status code indicating reason for failure
-        """
+        '''
 
         movie = Movie.query.get_or_404(id)
 
@@ -135,14 +135,14 @@ def create_app(test_config=None):
     @app.route('/actors', methods=['GET'])
     @requires_auth('get:actors')
     def get_actors(payload):
-        """
+        '''
             GET /actors
 
             returns status code 200 and json 
                 {"success": True, "actors": actors} 
                 where actors is the list of actors
                 OR appropriate status code indicating reason for failure
-        """
+        '''
         actors = Actor.query.order_by(Actor.id).all()
 
         if len(actors) == 0:
@@ -156,13 +156,13 @@ def create_app(test_config=None):
     @app.route('/actors', methods=['POST'])
     @requires_auth('post:actors')
     def post_actors(payload):
-        """
+        '''
             POST /actors
 
             returns status code 200 and json {"success": True, "created": id}
                     where id is the id of the created actor
                     OR appropriate status code indicating reason for failure
-        """
+        '''
         data = request.get_json()
 
         if not data:
@@ -195,13 +195,13 @@ def create_app(test_config=None):
     @app.route('/actors/<int:id>', methods=['PATCH'])
     @requires_auth('patch:actors')
     def patch_actors(payload, id):
-        """
+        '''
             PATCH /actors
 
             returns status code 200 and json {"success": True, "actor": actor}
                 where actor is the actor modified attributes
                 OR appropriate status code indicating reason for failure
-        """
+        '''
         actor = Actor.query.get_or_404(id)
 
         data = request.get_json()
@@ -234,13 +234,13 @@ def create_app(test_config=None):
     @app.route('/actors/<int:id>', methods=['DELETE'])
     @requires_auth('delete:actors')
     def delete_actor(payload, id):
-        """
+        '''
             DELETE /actors
 
             returns status code 200 and json {"success": True, "deleted": id}
                 where id is the id of deleted actor
                 OR appropriate status code indicating reason for failure
-        """
+        '''
         actor = Actor.query.get_or_404(id)
 
         try:
@@ -257,14 +257,6 @@ def create_app(test_config=None):
 
     # Error Handling
 
-    @app.errorhandler(422)
-    def unprocessable(error):
-        return jsonify({
-            "success": False,
-            "error": 422,
-            "message": "unprocessable"
-        }), 422
-
     @app.errorhandler(400)
     def bad_request(error):
         return jsonify({
@@ -280,6 +272,14 @@ def create_app(test_config=None):
             'error': 404,
             'message': 'resource not found'
         }), 404
+
+    @app.errorhandler(422)
+    def unprocessable(error):
+        return jsonify({
+            "success": False,
+            "error": 422,
+            "message": "unprocessable"
+        }), 422
 
     @app.errorhandler(AuthError)
     def authentication_error(error):

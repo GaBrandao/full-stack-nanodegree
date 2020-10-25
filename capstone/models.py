@@ -13,44 +13,21 @@ database_path = os.environ.get("DATABASE_URL", database_uri)
 
 db = SQLAlchemy()
 
-'''
-setup_db(app)
-    binds a flask application and a SQLAlchemy service
-'''
-
 
 def setup_db(app, database_path=database_path):
+    '''binds a flask application and a SQLAlchemy service'''
     app.config['SQLALCHEMY_DATABASE_URI'] = database_path
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
     # db_drop_and_create_all()
-    # populate_db()
-
-
-def populate_db():
-    movie = Movie(
-        title='Me Before You',
-        release_date=date.fromisoformat('2016-06-03')
-    )
-    movie.insert()
-
-    actor = Actor(
-        name='Emilia Clarke',
-        gender='Female',
-        age=34
-    )
-    actor.insert()
-
-
-'''
-db_drop_and_create_all()
-    drops the database tables and starts fresh
-    can be used to initialize a clean database
-'''
 
 
 def db_drop_and_create_all():
+    '''
+        drops the database tables and starts fresh
+        can be used to initialize a clean database
+    '''
     db.drop_all()
     db.create_all()
 
@@ -82,7 +59,7 @@ class Movie(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    @staticmethod
+    @ staticmethod
     def rollback():
         db.session.rollback()
 
@@ -123,7 +100,7 @@ class Actor(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    @staticmethod
+    @ staticmethod
     def rollback():
         db.session.rollback()
 

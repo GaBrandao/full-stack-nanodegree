@@ -61,9 +61,12 @@ class CastingAgencyTestCase(unittest.TestCase):
     def tearDown(self):
         """Executed after reach test"""
         movie = Movie.query.get(self.test_movie_id)
-
         if movie:
             movie.delete()
+
+        actor = Actor.query.get(self.test_actor_id)
+        if actor:
+            actor.delete()
 
     '''
         /movies ENDPOINT TESTS 
