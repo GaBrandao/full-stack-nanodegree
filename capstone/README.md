@@ -142,7 +142,7 @@ Summary:
     * [PATCH /actors/{id}](#patch-actors)
 	* [DELETE /actors/{id}](#delete-actors)
 
-Notice that it is required to pass an Authorization header containing a valid Bearer Token. You can find jwts for all roles in the file `config.py` and make it a bearer token by adding "Bearer " as prefix to those strings.
+Notice that it is required to pass an Authorization header containing a valid Bearer Token. You can find jwts for all roles in the file `config.py` and make then bearer tokens by adding "Bearer " as prefix to those strings.
 
 <a name="get-movies"/>
 
